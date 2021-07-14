@@ -7,14 +7,14 @@ document.querySelector("#chat").addEventListener("submit", (event) => {
       const message = document.querySelector('input[name="message"]').value;
 
       if(username.length && message.length) {
-        const messageObject = {
+        const messageData = {
           username,
           message,
         };
 
         document.querySelector('input[name="username"]').disabled = true;
-        renderMessage(messageObject);
-        socket.emit('sendMessage', messageObject);
+        renderMessage(messageData);
+        socket.emit('newMessage', messageData);
       }
 });
 
@@ -28,11 +28,11 @@ function renderMessage(message) {
    document.querySelector('input[name="message"]').focus();
 }
 
-socket.on('receivedMessage', (message) => {
+socket.on('showReceivedMessage', (message) => {
   renderMessage(message);
 });
 
-socket.on('previousMessages', (messages) => {
+socket.on('showAllMessages', (messages) => {
   for(let message of messages) {
     renderMessage(message);
   }

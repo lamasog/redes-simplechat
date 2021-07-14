@@ -15,17 +15,17 @@ app.use('/', (req, res) => {
 const port = process.env.PORT || 3000;
 server.listen(port, () => console.log(`Server running on port ${port}...`));
 
-let messages = [];
+let allMessages = [];
 
 io.on("connection", (socket) => {
-  console.log(`Usuário conectado: ${socket.id}`);
+  // console.log(`Usuário conectado: ${socket.id}`);
 
-  socket.emit('previousMessages', messages);
+  socket.emit('showAllMessages', allMessages);
 
-  socket.on('sendMessage', data => {
-    console.log(data);
-    messages.push(data);
-    socket.broadcast.emit('receivedMessage', data);
+  socket.on('newMessage', data => {
+    // console.log(data);
+    allMessages.push(data);
+    socket.broadcast.emit('showReceivedMessage', data);
   })
 });
 
