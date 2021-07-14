@@ -1,0 +1,22 @@
+{
+  "name": "projeto-redes",
+  "version": "1.0.0",
+  "description": "Projeto da disciplina de Redes de Computadores I",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon src/server.js"
+  },
+  "author": "Geovana Lamas",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "socket.io": "^4.1.3",
+    "socket.io-client": "^4.1.3"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/socket.io": "^3.0.2",
+    "nodemon": "^2.0.12"
+  }
+}
