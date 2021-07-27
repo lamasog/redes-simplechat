@@ -9,7 +9,7 @@ html, body {
   box-sizing: border-box;
 }
 
-#chat {
+form {
   height: 100%;
   display: flex;
   justify-content: center;
@@ -32,7 +32,6 @@ input:disabled {
   color: #ddd;
   font-weight: bold;
   border: rgb(38, 38, 38);
-  letter-spacing: 2px;
 }
 
 button {

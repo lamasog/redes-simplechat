@@ -1,21 +1,34 @@
 let socket = io();
 
-document.querySelector("#chat").addEventListener("submit", (event) => {
-      event.preventDefault();
+// Esperando o usuário preencher o formulário
+document.querySelector("form").addEventListener("submit", (event) => {
+    event.preventDefault();
 
-      const username = document.querySelector('input[name="username"]').value;
-      const message = document.querySelector('input[name="message"]').value;
+    const username = document.querySelector('input[name="username"]').value;
+    const message = document.querySelector('input[name="message"]').value;
+    
+    if(username.length && message.length) {
+      const messageData = {
+        username,
+        message,
+      };
+    
+      // Renderiza a mensagem e emite o evento para o servidor
+      renderMessage(messageData);
+      socket.emit('newMessage', messageData);
+    }
+  });
+    
+// Aguarda evento do servidor e renderiza a mensagem recebida
+socket.on('showReceivedMessage', (message) => {
+  renderMessage(message);
+});
 
-      if(username.length && message.length) {
-        const messageData = {
-          username,
-          message,
-        };
-
-        document.querySelector('input[name="username"]').disabled = true;
-        renderMessage(messageData);
-        socket.emit('newMessage', messageData);
-      }
+// Aguarda o evento do servidor para renderizar todas as mensagens
+socket.on('showAllMessages', (messages) => {
+  for(let message of messages) {
+    renderMessage(message);
+  }
 });
 
 function renderMessage(message) {
@@ -27,13 +40,3 @@ function renderMessage(message) {
    document.querySelector('input[name="message"]').value = '';
    document.querySelector('input[name="message"]').focus();
 }
-
-socket.on('showReceivedMessage', (message) => {
-  renderMessage(message);
-});
-
-socket.on('showAllMessages', (messages) => {
-  for(let message of messages) {
-    renderMessage(message);
-  }
-});
